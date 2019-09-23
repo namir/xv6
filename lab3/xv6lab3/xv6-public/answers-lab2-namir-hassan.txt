@@ -1,0 +1,67 @@
+NOTE TO THE GRADER:
+For TASK 1, Uncomment the cprintf statement in syscall() to see output.
+
+
+
+I have modified the following files to implement two system calls -
+int set_priority(int pid, int priority) and in get_priority(int pid)
+
+1) syscall.h
+Line#23 #define SYS_set_priority  22
+Line#24 #define SYS_get_priority  23
+system call number is added for each new system call.
+
+2) syscall.c
+Line#106 extern int sys_set_priority(void);
+Line#107 extern int sys_get_priority(void);
+
+These are system function forward declaration for system calls in sysproc.c
+
+Line#131 [SYS_set_priority]   sys_set_priority,
+Line#132 [SYS_get_priority]   sys_get_priority,
+
+Entry in the array of system calls of function pointer.
+
+3) proc.h
+Line#52  int priority;       // Keep priority of the process
+
+Added new field in the struct proc to keep the priority of each process identified by pid.
+
+4) sysproc.c   Added two new system calls
+Line#93 to Line#110: Defined the sys_set_priority(void)
+
+Line#112 to Line#122: Defined the sys_get_priority(void)
+
+5) defs.h
+Line#123 int             set_priority(int, int);
+Line#124 int             get_priority(int);
+
+Forward declaration of system call functions defined in  proc.c
+
+6) usys.S
+Line#32 SYSCALL(set_priority)
+Line#33 SYSCALL(get_priority)
+
+It makes set_priority/get_priority as a system call.
+
+7) user.h
+Line#26 int set_priority(int, int);
+Line#27 int get_priority(int);
+
+This forward declaration for User to call system calls.
+
+8) proc.c
+Line#186  curproc->priority = 20; // Default nice value
+defined default priority of a new process to 20.
+
+Line#551 to Line#549 defined: int set_priority(int pid, int priority){ ... }
+Line#551 to Line#565 defined: int get_priority(int pid) { ... }
+
+
+9) lab2test.c: create a c file for testing
+
+10) Makefile
+Line#184 _lab2test\
+Line#254 lab2test.c printf.c umalloc.c\
+
+Made change to compile user program.

@@ -48,28 +48,3 @@ will need to install a cross-compiler gcc suite capable of producing
 x86 ELF binaries (see https://pdos.csail.mit.edu/6.828/).
 Then run "make TOOLPREFIX=i386-jos-elf-". Now install the QEMU PC
 simulator and run "make qemu".
-
-
-
-
-To add a system call that can be called in xv6's shell, you should 
-do something with the five files
-
-sysproc.c add the real implementation of your method here
-
-syscall.h define the position of the system call vector that connect
-your implementation
-
-user.h define the function that can be called through shell
-
-syscall.c external define the function that connect the shell and 
-the kernel, use the position defined in syscall.h  to add the function to
-the system call vector. 
-
-usys.S use the macro to define connect the call of user to the system
-call function 
-
-defs.h add a forward declaration for your new system call 
-
-sysfunc.h add the new system call handler into this file too like 
-"int sys_newsystemcall(void)"

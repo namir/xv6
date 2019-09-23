@@ -20,6 +20,6 @@
 #define SYS_link   19
 #define SYS_mkdir  20
 #define SYS_close  21
-#define SYS_set_priority 22 // Change made by Yash Shah
-#define SYS_get_priority 23 // Change made by Yash Shah
-
+#define SYS_set_priority  22
+#define SYS_get_priority  23
+#define SYS_cps 24

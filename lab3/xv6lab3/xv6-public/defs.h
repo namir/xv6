@@ -120,9 +120,9 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            yield(void);
-int             set_priority(int pid, int priority);
-int             get_priority(int pid);
-
+int             set_priority(int, int);
+int             get_priority(int);
+int		cps(void);
 // swtch.S
 void            swtch(struct context**, struct context*);
 
@@ -157,9 +157,6 @@ int             argstr(int, char**);
 int             fetchint(uint, int*);
 int             fetchstr(uint, char**);
 void            syscall(void);
-int             set_priority(int, int);
-int             get_priority(int);
-
 
 // timer.c
 void            timerinit(void);
@@ -189,9 +186,7 @@ pde_t*          copyuvm(pde_t*, uint);
 void            switchuvm(struct proc*);
 void            switchkvm(void);
 int             copyout(pde_t*, uint, void*, uint);
-void     clearpteu(pde_t *pgdir, char *uva);
-
-
+void            clearpteu(pde_t *pgdir, char *uva);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

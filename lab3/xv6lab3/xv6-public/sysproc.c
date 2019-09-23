@@ -89,22 +89,39 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
-int 
-sys_get_priority(void)
-{
-  int pid;
-  if (argint(0, &pid) < 0)
-    return -1;
-  return get_priority(pid);
-}
-int 
+
+// set priority of a pid
+int
 sys_set_priority(void)
 {
   int pid;
-  int nice;
-  if (argint(0, &pid) < 0)
+  int priority;
+
+  if(argint(0, &pid) < 0)
+     return -1;
+  if(argint(1, &priority) < 0)
+     return -1;
+
+  if((priority <0) || (priority > 39))
+     priority = 6;
+
+  return set_priority(pid, priority);
+}
+
+// get priority of a pid
+int
+sys_get_priority(void)
+{
+  int pid;
+
+  if(argint(0, &pid) < 0)
     return -1;
-  if (argint(1, &nice) < 0)
-    return -1;
-  return set_priority(pid, nice);
+
+  return get_priority(pid);
+}
+
+int
+sys_cps(void)
+{
+  return cps();
 }

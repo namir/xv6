@@ -1,0 +1,25 @@
+ESTIMATE of time to complete lab: 10 hours
+
+	Start	Time	Lab
+Date	Time	Spent	Part	Work completed
+----	-----	-----	----	---------
+9/05	5:00	1:00	1	Read assignment, completed cprintf exercise	
+9/05	6:00	1:00	1	Read xv6 book	
+9/06	4:00	0:15	1	Completed task 1
+9/07	7:00	2:00	2	Exercise 2 and 3
+9/08	8:00	3:30	2	Finished working on user-level application lab2test.c
+9/09	9:00	1:00	2	Finished answers text file for changes made to files
+9/10	11:00	0:45	2	Time Logging 
+		-----
+		9:30	TOTAL time spent
+a brief discussion of the major difficulties encountered
+During debugging, the major difficulties were trying to
+get cases were the nice value would be out of the range 
+in which such integer values would be invalid priority. 
+To essentially combat this, an extra usage and print statement
+for invalid priority helps for this case. Another major difficulty is
+having my priority to not correctly set to the pid up until the end of 
+the completion of the lab. The value would be stored and set each for 
+pid and priorities. The overall difficulties has been overcome and
+will definately ensure that my usage of these strategies are used
+in future.

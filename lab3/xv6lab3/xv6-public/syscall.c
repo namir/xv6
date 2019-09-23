@@ -6,12 +6,6 @@
 #include "proc.h"
 #include "x86.h"
 #include "syscall.h"
-#include "spinlock.h" // Changes made by Yash Shah
-
-struct {  // changes made by Yash Shah
-  struct spinlock lock;
-  struct proc proc[NPROC];
-} ptable;
 
 // User code makes a system call with INT T_SYSCALL.
 // System call number in %eax.
@@ -66,7 +60,7 @@ argptr(int n, char **pp, int size)
 {
   int i;
   struct proc *curproc = myproc();
- 
+
   if(argint(n, &i) < 0)
     return -1;
   if(size < 0 || (uint)i >= curproc->sz || (uint)i+size > curproc->sz)
@@ -86,40 +80,6 @@ argstr(int n, char **pp)
   if(argint(n, &addr) < 0)
     return -1;
   return fetchstr(addr, pp);
-}
-int 
-set_priority(int pid, int priority) // changes made by Yash Shah
-{
-    priority = priority % 40;
-    struct proc *p; 
-
-    acquire(&ptable.lock);
-
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-        if (p -> pid == pid)
-            break;
-    }
-    release(&ptable.lock);
-    if (p -> pid != pid) 
-        return -1;
-    p -> nice = priority;
-    
-    return 0;
-}
-int 
-get_priority(int pid) // Changes made by Yash Shah
-{
-    struct proc *p; 
-    acquire(&ptable.lock);
-
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-        if (p -> pid == pid)
-            break;
-    }
-    release(&ptable.lock);
-    if (p -> pid != pid)
-        return -1;
-    return p -> nice;
 }
 
 extern int sys_chdir(void);
@@ -145,6 +105,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_set_priority(void);
 extern int sys_get_priority(void);
+extern int sys_cps(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -168,8 +129,9 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_set_priority] sys_set_priority,   // Changes made by Yash Shah
-[SYS_get_priority] sys_get_priority    // Changes made by Yash Shah
+[SYS_set_priority]   sys_set_priority,
+[SYS_get_priority]   sys_get_priority,
+[SYS_cps]   sys_cps,
 };
 
 void
@@ -177,92 +139,11 @@ syscall(void)
 {
   int num;
   struct proc *curproc = myproc();
-  num = curproc -> tf -> eax;
-  curproc -> tf -> eax = syscalls[num]();
+
+  num = curproc->tf->eax;
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
-    switch(num) {
-      case SYS_fork:
-        cprintf("fork -> %d\n ", num);
-        break;
-      case SYS_exit:
-        cprintf("exit -> %d\n", num);
-        break;
-      case SYS_wait:
-        cprintf("wait -> %d\n", num);
-        break;
-      case SYS_pipe:
-        cprintf("pipe -> %d\n", num);
-        break;
-
-      case SYS_read:
-        cprintf("read -> %d\n", num);
-        break;
-      case SYS_kill:
-        cprintf("kill -> %d\n", num);
-        break;
-
-      case SYS_exec:
-        cprintf("exec -> %d\n", num);
-        break;
-
-      case SYS_fstat:
-        cprintf("fstat -> %d\n", num);
-        break;
-
-      case SYS_chdir:
-        cprintf("chdir -> %d\n", num);
-        break;
-
-      case SYS_dup:
-        cprintf("dup -> %d\n", num);
-        break;
-
-      case SYS_getpid:
-        cprintf("getpid -> %d\n", num);
-        break;
-
-      case SYS_sbrk:
-        cprintf("sbrk -> %d\n", num);
-        break;
-
-      case SYS_sleep:
-        cprintf("sleep -> %d\n", num);
-        break;
-
-      case SYS_uptime:
-        cprintf("uptime -> %d\n", num);
-        break;
-
-      case SYS_open:
-        cprintf("open -> %d\n", num);
-        break;
-
-      case SYS_write:
-        cprintf("write -> %d\n", num);
-        break;
-
-      case SYS_mknod:
-        cprintf("mknod -> %d\n", num);
-        break;
-
-      case SYS_unlink:
-        cprintf("unlink -> %d\n", num);
-        break;
-
-      case SYS_link:
-        cprintf("link -> %d\n", num);
-        break;
-
-      case SYS_mkdir:
-        cprintf("mkdir -> %d\n", num);
-        break;
-
-      case SYS_close:
-        cprintf("close -> %d\n", num);
-        break;
-
-    }
-    
+    curproc->tf->eax = syscalls[num]();
+    //cprintf("%s -> %d\n", curproc->name, curproc->tf->eax);
   } else {
     cprintf("%d %s: unknown sys call %d\n",
             curproc->pid, curproc->name, num);
