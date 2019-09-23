@@ -1,7 +1,0 @@
-ESTIMATE of time to complete lab: 4 hours
-
-	Start	Time	Lab
-Date	Time	Spent	Part	Work completed
-----	-----	-----	----	---------
-09/22   10:00   00:30   4       Mostly done with the Part.    		-----
-		0:30	TOTAL time spent
