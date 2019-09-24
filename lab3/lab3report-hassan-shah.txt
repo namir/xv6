@@ -1,5 +1,134 @@
-TASK 1:
-TASK 2:
-TASK 3:
+Task 1: Display the currect process status
+Exercise 1
 
-// I will add my command and output when i get back to socorro
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+ps 	 3 	 RUNNING 	 10 
+
+
+
+Task 2: User program to change the nice value
+Exercise 2
+
+$ lab3test 4 &
+$ Parent 10 creating child 11
+Child 11 created
+
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNING 	 20 
+lab3test 	 10 	 SLEEEPING 	 10 
+ps 	 13 	 RUNNING 	 10 
+$ nice 11 18
+pid=11, priority=18
+set_priority(): Setting priority for pid=11 to priority=18, 18
+Successfully set priority=18 to pid=11
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNING 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+ps 	 15 	 RUNNING 	 10 
+
+
+
+Task 3: Round-robin scheduling for xv6
+Exercise 3
+
+$ lab3test &; lab3test &; lab3test & 
+Parent 20 creating child 22
+Child$Parent 23 cParent 18 creating child 21
+Child 21  22 created
+rceating child 24
+reated
+ Child 24 created
+
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNING 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+lab3test 	 24 	 RUNNABLE 	 20 
+lab3test 	 23 	 SLEEEPING 	 10 
+lab3test 	 18 	 SLEEEPING 	 10 
+lab3test 	 20 	 SLEEEPING 	 10 
+lab3test 	 21 	 RUNNABLE 	 20 
+lab3test 	 22 	 RUNNABLE 	 20 
+ps 	 26 	 RUNNING 	 10 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNABLE 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+lab3test 	 24 	 RUNNABLE 	 20 
+lab3test 	 23 	 SLEEEPING 	 10 
+lab3test 	 18 	 SLEEEPING 	 10 
+lab3test 	 20 	 SLEEEPING 	 10 
+lab3test 	 21 	 RUNNABLE 	 20 
+lab3test 	 22 	 RUNNING 	 20 
+ps 	 27 	 RUNNING 	 10 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNABLE 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+lab3test 	 24 	 RUNNABLE 	 20 
+lab3test 	 23 	 SLEEEPING 	 10 
+lab3test 	 18 	 SLEEEPING 	 10 
+lab3test 	 20 	 SLEEEPING 	 10 
+lab3test 	 21 	 RUNNING 	 20 
+lab3test 	 22 	 RUNNABLE 	 20 
+ps 	 28 	 RUNNING 	 10 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNABLE 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+lab3test 	 24 	 RUNNABLE 	 20 
+lab3test 	 23 	 SLEEEPING 	 10 
+lab3test 	 18 	 SLEEEPING 	 10 
+lab3test 	 20 	 SLEEEPING 	 10 
+lab3test 	 21 	 RUNNING 	 20 
+lab3test 	 22 	 RUNNABLE 	 20 
+ps 	 29 	 RUNNING 	 10 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 10 
+sh 	 2 	 SLEEEPING 	 10 
+lab3test 	 11 	 RUNNING 	 18 
+lab3test 	 10 	 SLEEEPING 	 10 
+lab3test 	 24 	 RUNNABLE 	 20 
+lab3test 	 23 	 SLEEEPING 	 10 
+lab3test 	 18 	 SLEEEPING 	 10 
+lab3test 	 20 	 SLEEEPING 	 10 
+lab3test 	 21 	 RUNNABLE 	 20 
+lab3test 	 22 	 RUNNABLE 	 20 
+ps 	 30 	 RUNNING 	 10 
+
+
+
+
+Observation Explaination: The state changes for different intervals 
+of typing ps command. (ie. RUNNING > RUNNABLE)
+
+
+
+Task 4: Priority scheduling for xv6
+Exercise 4
+
+
+
+
+Exercise 5
+
+
+
