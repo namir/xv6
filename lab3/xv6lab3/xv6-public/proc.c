@@ -322,43 +322,42 @@ wait(void)
 void
 scheduler(void)
 {
-  struct proc *p, *q;
+  struct proc *p;
+  struct proc *min_priority; // Inserted by Yash
+  struct proc *r; // Inserted by Yash
   struct cpu *c = mycpu();
   c->proc = 0;
-  int min_priority = 40;
+
   for(;;){
     // Enable interrupts on this processor.
     sti();
 
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
-     // Edited by Yash Shah
-
-    for (q = ptable.proc; p < &ptable.proc[NPROC]; q++) {
-      if (q -> state == RUNNABLE)
-        if (q -> priority < min_priority) 
-          min_priority = q -> priority;
-    }
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->state != RUNNABLE)
         continue;
-
+    min_priority = p; // Inserted by Yash 
+    for (r = ptable.proc; r < &ptable.proc[NPROC]; r++) { // Inserted by Yash
+      if (r -> state != RUNNABLE)
+        continue;
+      if ((min_priority -> priority) > (r -> priority)) // lower the nice value, greater the priority 
+        min_priority = r; // Change if the nice value is lower. 
+    }
+      p = min_priority; // Inserted Yash Shah
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
-      else if (p -> state == RUNNABLE && p -> priority == min_priority) {
-        c->proc = p;
-        switchuvm(p);
-        p->state = RUNNING;
+      c->proc = p;
+      switchuvm(p);
+      p->state = RUNNING;
 
-        swtch(&(c->scheduler), p->context);
-        switchkvm();
+      swtch(&(c->scheduler), p->context);
+      switchkvm();
 
-        // Process is done running for now.
-        // It should have changed its p->state before coming back.
-        c->proc = 0;
-
-      }
+      // Process is done running for now.
+      // It should have changed its p->state before coming back.
+      c->proc = 0;
     }
     release(&ptable.lock);
 
