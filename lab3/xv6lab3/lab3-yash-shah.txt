@@ -5,4 +5,15 @@ ESTIMATE of time to complete lab: 4 hours
 Date	Time	Spent	Part	Work completed
 ----	-----	-----	----	---------
 09/22   10:00   00:30   4       Mostly done with the Part 4
-		0:30	TOTAL time spent
+09/24	15:00	5:15	4	Figured out why my scheduling was wrong. 	
+		5:45	TOTAL time spent
+
+Difficulties encountered:
+
+During the lab work, I realized that for-loop before the given for loop in 
+scheduler refrains qemu from taking any keyboard input, which was unforeseen. 
+It took me quite a while to figure that out. The code itself was very short, 
+but the debugging done was huge and I had to create 2 test files to test why 
+and how it works. But eventually, it ended up working. 
+Cheers,
+Yash. 
