@@ -123,12 +123,86 @@ of typing ps command. (ie. RUNNING > RUNNABLE)
 
 
 Task 4: Priority scheduling for xv6
-Exercise 4
+                                Exercise 4
+
+Scheduler() was changed. The algorithm was simple as to find 
+the minimum from the nice value. I iterated through the PTABLE 
+the same way as the scheduler() does and I found the minimum 
+nice valued process, then I switched to it and scheduler does 
+the rest. 
 
 
 
+                                Exercise 5
+$ lab3test &; lab3test &; lab3test &;
+Parent 5 creating child 7
+Child 7 created
+Parent 8 creating child 9
+Child 9 created
+Parent 11 creating child 12
+Child 12 created
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 20 
+sh 	 2 	 SLEEEPING 	 20 
+ps 	 13 	 RUNNING 	 10 
+lab3test 	 12 	 RUNNABLE 	 20 
+lab3test 	 5 	 SLEEEPING 	 20 
+lab3test 	 7 	 RUNNING 	 20 
+lab3test 	 8 	 SLEEEPING 	 20 
+lab3test 	 9 	 RUNNABLE 	 20 
+lab3test 	 11 	 SLEEEPING 	 20 
+$ nice 9 19
+pid=9, priority=19
+set_priority(): Setting priority for pid=9 to priority=19, 19
+Successfully set priority=19 to pid=9
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 20 
+sh 	 2 	 SLEEEPING 	 20 
+ps 	 15 	 RUNNING 	 10 
+lab3test 	 12 	 RUNNABLE 	 20 
+lab3test 	 5 	 SLEEEPING 	 20 
+lab3test 	 7 	 RUNNABLE 	 20 
+lab3test 	 8 	 SLEEEPING 	 20 
+lab3test 	 9 	 RUNNING 	 19 
+lab3test 	 11 	 SLEEEPING 	 20 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 20 
+sh 	 2 	 SLEEEPING 	 20 
+ps 	 16 	 RUNNING 	 10 
+lab3test 	 12 	 RUNNABLE 	 20 
+lab3test 	 5 	 SLEEEPING 	 20 
+lab3test 	 7 	 RUNNABLE 	 20 
+lab3test 	 8 	 SLEEEPING 	 20 
+lab3test 	 9 	 RUNNING 	 19 
+lab3test 	 11 	 SLEEEPING 	 20 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 20 
+sh 	 2 	 SLEEEPING 	 20 
+ps 	 17 	 RUNNING 	 10 
+lab3test 	 12 	 RUNNABLE 	 20 
+lab3test 	 5 	 SLEEEPING 	 20 
+lab3test 	 7 	 RUNNABLE 	 20 
+lab3test 	 8 	 SLEEEPING 	 20 
+lab3test 	 9 	 RUNNING 	 19 
+lab3test 	 11 	 SLEEEPING 	 20 
+$ ps
+name 	 pid 	 state 	 priority 
+init 	 1 	 SLEEEPING 	 20 
+sh 	 2 	 SLEEEPING 	 20 
+ps 	 18 	 RUNNING 	 10 
+lab3test 	 12 	 RUNNABLE 	 20 
+lab3test 	 5 	 SLEEEPING 	 20 
+lab3test 	 7 	 RUNNABLE 	 20 
+lab3test 	 8 	 SLEEEPING 	 20 
+lab3test 	 9 	 RUNNING 	 19 
+lab3test 	 11 	 SLEEEPING 	 20 
 
-Exercise 5
 
+Observation: After setting the nice value to 19, the process state stays RUNNING. 
+This scheduling algorithm only applies to the process's whose state is RUNNABLE. 
 
 
