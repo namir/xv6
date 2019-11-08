@@ -1,0 +1,14 @@
+Time-Logging
+
+ESTIMATE of time to complete lab: 4 hours
+
+	Start	Time	Lab
+Date	Time	Spent	Part	Work completed
+----	-----	-----	----	---------
+11/03   09:00	4:00	3,4	Helped finish the project
+
+Difficulties encountered:
+
+I had to do extensive reading for exercise 5 and exercise 5 about 
+page-tables and how xv6 has 2 different page sizes and how 
+exactly will that be right and works. 
